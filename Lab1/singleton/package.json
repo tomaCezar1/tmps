@@ -1,0 +1,16 @@
+{
+  "name": "singleton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "singleton.js",
+  "scripts": {
+    "tsc": "tsc",
+    "http-server": "npx http-server -o -p 3000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
