@@ -46,3 +46,8 @@ console.log('--------------');
 console.log(books);
 console.log('--------------');
 console.log(bookList);
+
+// books.forEach((key, value, map) => {
+//   console.log(key);
+//   console.log(value);
+// });
