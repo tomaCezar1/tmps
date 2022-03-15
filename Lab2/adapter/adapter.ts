@@ -18,13 +18,13 @@ class Payment implements IPayment {
   }
 }
 
-interface IThirdPartyPayment {
+interface IOtherPayment {
   id: number;
   amount: number;
   sendPayment: Function;
 }
 
-class ThirdPartyPayment implements IThirdPartyPayment {
+class OtherPayment implements IOtherPayment {
   public id: number;
   public amount: number;
 
@@ -38,17 +38,17 @@ class ThirdPartyPayment implements IThirdPartyPayment {
   }
 }
 
-enum PaymentType {
+enum PaymentTypes {
   ThirdParty,
-  Proprietary,
+  Standard,
 }
 
 class PaymentAdapter implements IPayment {
   public id: string | number;
   public total: number;
-  public type: PaymentType;
+  public type: PaymentTypes;
 
-  constructor(id: string | number, total: number, type: PaymentType) {
+  constructor(id: string | number, total: number, type: PaymentTypes) {
     this.id = id;
     this.type = type;
     this.total = total;
@@ -56,15 +56,15 @@ class PaymentAdapter implements IPayment {
 
   public submitPayment() {
     switch (this.type) {
-      case PaymentType.ThirdParty: {
+      case PaymentTypes.ThirdParty: {
         const amount = this.total;
         const id = +this.id;
-        const payment = new ThirdPartyPayment(id, amount);
+        const payment = new OtherPayment(id, amount);
         payment.sendPayment();
         break;
       }
 
-      case PaymentType.Proprietary: {
+      case PaymentTypes.Standard: {
         const id = this.id.toString();
         const payment = new Payment(id, this.total);
         payment.submitPayment();
@@ -81,13 +81,13 @@ class PaymentAdapter implements IPayment {
 const payment: IPayment = new PaymentAdapter(
   '123123123',
   37.5,
-  PaymentType.Proprietary
+  PaymentTypes.Standard
 );
 
 const payment2: IPayment = new PaymentAdapter(
   '512312',
   99.99,
-  PaymentType.ThirdParty
+  PaymentTypes.ThirdParty
 );
 
 payment.submitPayment();
